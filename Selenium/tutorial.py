@@ -9,21 +9,30 @@ import time
 service = Service("/home/cassius/Downloads/chromedriver")
 driver = webdriver.Chrome(service=service)
 
-
 driver.get("https://techwithtim.net")
-print(driver.title)
 
-search = driver.find_element("name", "s")
-search.send_keys("test")
-search.send_keys(Keys.RETURN)
+
+link = driver.find_element(By.LINK_TEXT, "Python Programming")
+link.click()
 
 try:
-    main = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "main"))
+    element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.LINK_TEXT, "Beginner Python Tutorials"))
     )
-    articles = main.find_elements(By.TAG_NAME, "article")
-    for article in articles:
-        header = article.find_element(By.CLASS_NAME, "entry-summary")
-        print(header.text)
-finally:
+    element.click()
+
+    element = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, "sow-button-19310003"))
+    )
+    element.click()
+
+    driver.back()
+    driver.back()
+    driver.back()
+    driver.forward()
+    driver.forward()
+
+except:
     driver.quit()
+
+time.sleep(60)
